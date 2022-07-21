@@ -87,7 +87,7 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
         returns (uint256)
     {
         require(_tokenIds.current() < maxSupply, "Exceeded max supply!");
-        require(msg.value >= mintPrice, "Not enought ETH sent; check price!");
+        require(msg.value >= mintPrice, "Not enough ETH sent; check price!");
 
         _tokenIds.increment();
         uint256 newTokenId = _tokenIds.current();
@@ -105,7 +105,7 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
             "Recievers and IDs have different lengths!"
         );
         for (uint256 i = 0; i < tokenIds.length; i++) {
-            safeTransferFrom(msg.sender, addresses[i], tokenIds[i]);
+            safeTransferFrom(_deployer, addresses[i], tokenIds[i]);
         }
     }
 
