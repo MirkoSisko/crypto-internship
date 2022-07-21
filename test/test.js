@@ -5,6 +5,10 @@ const { ethers } = require("hardhat");
 
 describe("BlankHoodie contract", function () {
   let BlankHoodie, blankHoodieToken;
+  const airdropAddresses = [
+    "0x376288543987d940206a75E89Eaaa2A95A57F90B",
+    "0xbf13Eb4a42043F1AcFDa216c3b6547075492B732",
+  ];
   const name = "Blank Hoodie";
   const symbol = "HOODIE";
   const minValue = BigNumber.from("1000000000000000000");
@@ -43,7 +47,7 @@ describe("BlankHoodie contract", function () {
     //   });
     //   expect(await blankHoodieToken.balanceOf(account1.address)).to.equal(1);
     // });
-    // it("Mint id should not exceed max supply", async function () {});
+    it("Should send tokens with given id to a set of addresses", async function () {});
   });
 
   describe("Only owner functions", function () {
@@ -62,7 +66,11 @@ describe("BlankHoodie contract", function () {
     });
   });
 
-  // describe("Addresses for airdrop", function () {
-  //   it("Addresses should be set to given value", async function () {});
-  // });
+  describe("Addresses for airdrop", function () {
+    it("Addresses should be set to given value", async function () {
+      await blankHoodieToken.setAddresses(airdropAddresses);
+      const result = await blankHoodieToken.getAddresses();
+      expect(result.length).to.equal(airdropAddresses.length);
+    });
+  });
 });

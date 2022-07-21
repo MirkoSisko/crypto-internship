@@ -9,6 +9,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
+
     address public _deployer;
 
     mapping(uint256 => string) _tokenURIs;
@@ -28,6 +29,17 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
             if (!exists(_addresses[i])) {
                 addresses.push(_addresses[i]);
             }
+        }
+    }
+
+    // Remove address from airdropAddresses
+    // Trenutno brise zadnjeg, a ne odabranog
+    function removeAddress(address _address) public {
+        for (uint256 i = 0; i < addresses.length - 1; i++) {
+            if (_address == addresses[i]) {
+                addresses[i] == addresses[i + 1];
+            }
+            addresses.pop();
         }
     }
 
@@ -96,6 +108,17 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
         _setTokenURI(newTokenId, metadata);
 
         return newTokenId;
+    }
+
+    function getTokenIds() public view returns (uint256[] memory) {
+        uint256 latestId = _tokenIds.current();
+        uint256[] memory tempArray = new uint256[](latestId);
+        for (uint256 i = 0; i < latestId; i++) {
+            if (_exists(i)) {
+                tempArray[i] = i;
+            }
+        }
+        return tempArray;
     }
 
     // Send tokens to selected addresses
