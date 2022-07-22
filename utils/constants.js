@@ -1,4 +1,4 @@
-export const contractAddress = "0x9a0d91DFFB36279AE2BAB36c99717a2b5ac83e39";
+export const contractAddress = "0xf7591D64bCF8d56D2896Bb0599A1369cCF271fd1";
 export const abi = [
   {
     inputs: [],
@@ -100,39 +100,12 @@ export const abi = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "_deployer",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
+        internalType: "address[]",
+        name: "addresses",
+        type: "address[]",
       },
-    ],
-    name: "addresses",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
       {
         internalType: "uint256[]",
         name: "tokenIds",
@@ -182,32 +155,13 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_address",
-        type: "address",
-      },
-    ],
-    name: "exists",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [],
-    name: "getAddresses",
+    name: "baseURI",
     outputs: [
       {
-        internalType: "address[]",
+        internalType: "string",
         name: "",
-        type: "address[]",
+        type: "string",
       },
     ],
     stateMutability: "view",
@@ -259,6 +213,19 @@ export const abi = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "getTokenIds",
+    outputs: [
+      {
+        internalType: "uint256[]",
+        name: "",
+        type: "uint256[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       {
         internalType: "address",
@@ -301,11 +268,6 @@ export const abi = [
         internalType: "address",
         name: "_to",
         type: "address",
-      },
-      {
-        internalType: "string",
-        name: "metadata",
-        type: "string",
       },
     ],
     name: "mint",
@@ -438,19 +400,6 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "address[]",
-        name: "_addresses",
-        type: "address[]",
-      },
-    ],
-    name: "setAddresses",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
         internalType: "address",
         name: "operator",
         type: "address",
@@ -462,6 +411,19 @@ export const abi = [
       },
     ],
     name: "setApprovalForAll",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "_uri",
+        type: "string",
+      },
+    ],
+    name: "setBaseURI",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
