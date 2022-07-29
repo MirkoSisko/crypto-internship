@@ -6,6 +6,9 @@ import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 
+error InvalidAmount();
+error ExceededMaxSupply();
+
 contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -37,7 +40,7 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
     }
 
     // Set URI
-    function setBaseURI(string calldata _uri) public onlyOwner {
+    function setBaseURI(string calldata _uri) external onlyOwner {
         baseURI = _uri;
     }
 
@@ -48,46 +51,29 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
         override
         returns (string memory)
     {
-        require(_exists(tokenId), "URI not exist on that ID");
-        string memory _RUri = baseURI;
-        return _RUri;
+        require(_exists(tokenId), "URI doesn't exist");
+        return baseURI;
     }
 
     // Mint
     function mint(address _to) external payable returns (uint256) {
-        require(_tokenIds.current() < maxSupply, "Exceeded max supply!");
-        require(msg.value >= mintPrice, "Not enough ETH sent; check price!");
+        if (_tokenIds.current() > maxSupply) revert ExceededMaxSupply();
+        if (msg.value >= mintPrice) revert InvalidAmount();
 
-        uint256 newTokenId = _tokenIds.current();
         _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
 
         _safeMint(_to, newTokenId);
         tokenURI(newTokenId);
         return newTokenId;
     }
 
-    function getTokenIds() public view returns (uint256[] memory) {
-        uint256 latestId = _tokenIds.current();
-        uint256[] memory tempArray = new uint256[](latestId);
-        for (uint256 i = 1; i < latestId; i++) {
-            if (_exists(i)) {
-                tempArray[i] = i;
-            }
-        }
-        return tempArray;
-    }
-
     // Send tokens to selected addresses
-    function airdrop(address[] calldata addresses, uint256[] calldata tokenIds)
-        external
-        onlyOwner
-    {
-        require(
-            addresses.length == tokenIds.length,
-            "Recievers and IDs have different lengths!"
-        );
-        for (uint256 i = 0; i < tokenIds.length; i++) {
-            safeTransferFrom(owner(), addresses[i], tokenIds[i]);
+    function airdrop(address[] calldata addresses) external onlyOwner {
+        for (uint256 i = 0; i < addresses.length; i++) {
+            _tokenIds.increment();
+            uint256 newTokenId = _tokenIds.current();
+            _safeMint(addresses[i], newTokenId);
         }
     }
 
@@ -113,6 +99,6 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
 
     // Withdraw funds
     function withdraw(address payable _to) public onlyOwner {
-        _to.transfer(balanceOf(_to));
+        _to.transfer(address(this).balance);
     }
 }
