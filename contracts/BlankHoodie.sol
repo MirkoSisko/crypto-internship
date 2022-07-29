@@ -8,6 +8,7 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 
 error InvalidAmount();
 error ExceededMaxSupply();
+error URIDoesntExist();
 
 contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
     using Counters for Counters.Counter;
@@ -51,7 +52,7 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
         override
         returns (string memory)
     {
-        require(_exists(tokenId), "URI doesn't exist");
+        if (!_exists(tokenId)) revert URIDoesntExist();
         return baseURI;
     }
 
