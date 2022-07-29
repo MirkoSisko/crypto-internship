@@ -16,8 +16,6 @@ contract BlankHoodie is ERC721, ERC721Enumerable, Ownable {
     uint256 public mintPrice = 0.1 ether;
     uint256 public maxSupply = 500;
 
-    uint256 no = 1;
-
     string public baseURI =
         "ipfs://QmVqodXFfpUU13GJDetcE2UtPLWMBsZubX6ZnhU3XDWhmJ";
 
