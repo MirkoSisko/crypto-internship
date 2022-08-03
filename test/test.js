@@ -5,15 +5,15 @@ const { ethers } = require("hardhat");
 
 describe("BlankHoodie contract", function () {
   let BlankHoodie, blankHoodieToken;
-  const airdropAddresses = [
-    "0x376288543987d940206a75E89Eaaa2A95A57F90B",
-    "0xbf13Eb4a42043F1AcFDa216c3b6547075492B732",
-  ];
   const name = "Blank Hoodie";
   const symbol = "HOODIE";
   const minValue = BigNumber.from("1000000000000000000");
   const newMinValue = parseUnits("0.2");
   const newMaxSupply = parseUnits("499");
+  const airdropAddresses = [
+    "0x376288543987d940206a75E89Eaaa2A95A57F90B",
+    "0xbf13Eb4a42043F1AcFDa216c3b6547075492B732",
+  ];
 
   beforeEach(async function () {
     BlankHoodie = await ethers.getContractFactory("BlankHoodie");
@@ -22,7 +22,7 @@ describe("BlankHoodie contract", function () {
 
   describe("Deployment", function () {
     it("Should set the right owner", async function () {
-      const [owner, account1, ...otherAccounts] = await ethers.getSigners();
+      const [owner] = await ethers.getSigners();
       expect(await blankHoodieToken.owner()).to.equal(owner.address);
     });
 
@@ -32,22 +32,27 @@ describe("BlankHoodie contract", function () {
     });
 
     it("Deployment should assign the total supply of tokens to the owner", async function () {
-      const [owner, account1, ...otherAccounts] = await ethers.getSigners();
+      const [owner] = await ethers.getSigners();
       const ownerBalance = await blankHoodieToken.balanceOf(owner.address);
       expect(await blankHoodieToken.totalSupply()).to.equal(ownerBalance);
     });
   });
 
   describe("Minting", function () {
-    // it("Should mint a token to address1", async function () {
-    //   const [owner, account1, ...otherAccounts] = await ethers.getSigners();
-    //   console.log("Min Value ->", formatUnits(minValue));
-    //   await blankHoodieToken.mint(account1.address, {
-    //     value: formatUnits(minValue),
-    //   });
-    //   expect(await blankHoodieToken.balanceOf(account1.address)).to.equal(1);
-    // });
-    it("Should send tokens with given id to a set of addresses", async function () {});
+    it("Should mint a token to address1", async function () {
+      const [owner] = await ethers.getSigners();
+      await blankHoodieToken.mint(owner.address, {
+        value: Number(formatUnits(minValue)),
+      });
+      expect(await blankHoodieToken.balanceOf(owner.address)).to.equal(1);
+    });
+
+    it("Should airdrop new tokens to set addresses", async function () {
+      await blankHoodieToken.airdrop(airdropAddresses);
+      expect(await blankHoodieToken.totalSupply()).to.equal(
+        airdropAddresses.length
+      );
+    });
   });
 
   describe("Only owner functions", function () {
@@ -63,14 +68,6 @@ describe("BlankHoodie contract", function () {
       expect(await blankHoodieToken.getMintPrice()).to.equal(
         formatUnits(newMinValue, "wei")
       );
-    });
-  });
-
-  describe("Addresses for airdrop", function () {
-    it("Addresses should be set to given value", async function () {
-      await blankHoodieToken.setAddresses(airdropAddresses);
-      const result = await blankHoodieToken.getAddresses();
-      expect(result.length).to.equal(airdropAddresses.length);
     });
   });
 });
