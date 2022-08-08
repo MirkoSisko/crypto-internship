@@ -1,0 +1,29 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 24px 40px;
+
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .blank-logo {
+      width: 85px;
+      height: 16px;
+    }
+  }
+
+  .nav-links {
+    flex: 1;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    gap: 40px;
+
+    .nav-link {
+      text-decoration: none;
+      list-style: none;
+    }
+  }
+}

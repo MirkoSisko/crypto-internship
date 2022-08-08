@@ -1,0 +1,15 @@
+@import "./variables";
+
+html,
+body {
+  font-family: "DM Sans", sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  color: $white;
+}
+
+h1 {
+  -webkit-text-stroke: 1.5px #fff;
+  color: transparent;
+}

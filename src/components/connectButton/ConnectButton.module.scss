@@ -1,0 +1,24 @@
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 197px;
+  height: 48px;
+  padding: 0 40px;
+
+  border: none;
+  background: none;
+
+  background: linear-gradient(
+    96.8deg,
+    #dfb676 0%,
+    #d1837f 32.81%,
+    #8ec4aa 67.19%,
+    #80abd8 100%
+  );
+
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 18px;
+}
