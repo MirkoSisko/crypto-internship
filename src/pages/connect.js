@@ -1,7 +1,8 @@
+import Layout from "@components/layout";
 import React from "react";
 
 const connect = () => {
-  return <div>connect</div>;
+  return <Layout></Layout>;
 };
 
 export default connect;

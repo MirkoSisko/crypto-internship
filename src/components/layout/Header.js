@@ -1,14 +1,13 @@
-import Title from "@features/landing/landingTitle";
 import Navbar from "@shared/navbar";
 import React from "react";
 
 import styles from "./Header.module.scss";
 
-const Header = () => {
+const Header = ({ children }) => {
   return (
     <header className={styles.header}>
       <Navbar />
-      <Title />
+      {children}
     </header>
   );
 };
