@@ -48,6 +48,7 @@
         .priceAndSupply {
           display: inline-block;
           width: 100%;
+          margin-bottom: 16px;
 
           .priceSection {
             float: left;
@@ -276,6 +277,7 @@
 
 @media screen and (max-width: 600px) {
   .container {
+    padding: 0 24px;
     .titleMintFeaturesContainer {
       .featuresContainer {
         padding: 52px 40px;
