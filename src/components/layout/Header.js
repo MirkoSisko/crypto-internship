@@ -1,4 +1,4 @@
-import Title from "@components/landingTitle";
+import Title from "@features/landing/landingTitle";
 import Navbar from "@shared/navbar";
 import React from "react";
 
